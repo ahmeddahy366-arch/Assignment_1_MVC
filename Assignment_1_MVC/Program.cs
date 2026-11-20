@@ -1,3 +1,5 @@
+using Assignment_1_MVC.CustomMiddelweare;
+
 namespace Assignment_1_MVC
 {
     public class Program
@@ -10,6 +12,15 @@ namespace Assignment_1_MVC
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("hello");
+                await next(context);
+                Console.WriteLine("bye byee");
+
+
+            });
+            app.UseMiddleware<RequestTimingMiddelware>();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
